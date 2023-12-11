@@ -9,7 +9,7 @@ return {
         ending = 6
     },
 
-    useRealTime = false, -- If true, the server will override all other configs and use the servers real time.
+    useRealTime = true, -- If true, the server will override all other configs and use the servers real time.
 
     startUpTime = {
         hour = 12,

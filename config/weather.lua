@@ -7,27 +7,27 @@ return {
     timeBetweenRain = 180, -- How many minutes between rain events
     rainAfterRestart = 60, -- How many minutes AFTER a server restart before rain will start to show?
 
-    decemberSnow = true, -- if turned on means that only snow will happen in december
+    decemberSnow = false, -- if turned on means that only snow will happen in december
 
     useStaticWeather = true,
     staticWeather = {
         ['BLIZZARD'] = 0.0, --0% chance
-        ['CLEAR'] = 0.1, -- 10% chance
+        ['CLEAR'] = 0.2, -- 20% chance
         ['CLEARING'] = 0.1, -- 10% chance
-        ['CLOUDS'] = 0.1, -- 10% chance
+        ['CLOUDS'] = 0.2, -- 20% chance
         ['EXTRASUNNY'] = 0.4, -- 40% chance
-        ['FOGGY'] = 0.1,
+        ['FOGGY'] = 0.1, -- 10% chance
         ['NEUTRAL'] = 0.0,
-        ['OVERCAST'] = 0.1,
-        ['RAIN'] = 0.1,
-        ['SMOG'] = 0.1,
+        ['OVERCAST'] = 0.0,
+        ['RAIN'] = 0.0,
+        ['SMOG'] = 0.0,
         ['SNOW'] = 0.0,
         ['SNOWLIGHT'] = 0.0,
-        ['THUNDER'] = 0.1,
+        ['THUNDER'] = 0.0,
         ['XMAS'] = 0.0
     },
 
-    useWeatherSequences = true,
+    useWeatherSequences = false,
 
     weatherSequences = {
 
