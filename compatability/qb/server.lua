@@ -80,3 +80,10 @@ RegisterNetEvent('qb-weathersync:server:setTime', function(hour, minute)
         minute = tonumber(minute) or 0,
      }
 end)
+
+lib.addCommand('blackout', {
+    help = 'City Power Outage',
+    restricted = 'group.admin',
+}, function(source)
+    globalState.blackOut = not globalState.blackOut
+end)
