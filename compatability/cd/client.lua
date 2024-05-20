@@ -3,7 +3,6 @@ if GetConvar('weather_disablecd', 'false') == 'true' then
 end
 
 local cd_weather = {}
-
 local playerState = LocalPlayer.state
 
 AddStateBagChangeHandler('weather', 'global', function(_, _, value)

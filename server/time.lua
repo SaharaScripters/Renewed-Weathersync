@@ -1,22 +1,16 @@
 local Config = require 'config.time'
-
 local globalState = GlobalState
-
 local useRealTime = Config.useRealTime
-
 -- GlobalState checks here are to ensure that the if the script is being restarted live the time doesn't reset.
 local configScale = useRealTime and 60000 or Config.timeScale
 local currentScale = globalState.timeScale or configScale
 local freezeTime = globalState.freezeTime
 local startTime = useRealTime and { hour = tonumber(os.date('%H')), minute = tonumber(os.date('%M')) } or Config.startUpTime
-
 local minute = startTime.minute
 local hour = startTime.hour
-
 -- Syncs the GlobalStates (does not replicate if the values are the same)
 globalState.timeScale = currentScale
 globalState.freezeTime = freezeTime
-
 
 -- Loop that syncs the minute and hours of the servers to clients.
 CreateThread(function()
@@ -27,11 +21,9 @@ CreateThread(function()
                 hour = minute == 59 and (hour == 23 and 0 or hour + 1) or hour,
             }
         end
-
         Wait(currentScale)
     end
 end)
-
 
 -- Add server side statebag change handlers so third party resources can set globalstates and we can replicate the data.
 AddStateBagChangeHandler('freezeTime', 'global', function(_, _, value)
@@ -40,14 +32,12 @@ AddStateBagChangeHandler('freezeTime', 'global', function(_, _, value)
     end
 end)
 
-
 local nightScale = Config.timeScaleNight
 local nightStart, nightEnd = Config.nightTime.beginning, Config.nightTime.ending
 AddStateBagChangeHandler('currentTime', 'global', function(_, _, value)
     if value then
         hour = value.hour
         minute = value.minute
-
         if not useRealTime and Config.useNightScale then
             if (hour > nightStart or hour < nightEnd) and currentScale ~= nightScale then
                 currentScale = nightScale
@@ -91,7 +81,6 @@ if not useRealTime then
             minute = newMinutes > 59 and 59 or newMinutes < 0 and 0 or newMinutes,
         }
     end)
-
     lib.addCommand('noon', {
         help = 'Set the current time to noon (12:00)',
         restricted = 'group.admin',
@@ -101,7 +90,6 @@ if not useRealTime then
             minute = 0,
         }
     end)
-
     lib.addCommand('morning', {
         help = 'Set the current time to morning (9:00)',
         restricted = 'group.admin',
@@ -111,7 +99,6 @@ if not useRealTime then
             minute = 0,
         }
     end)
-    
     lib.addCommand('evening', {
         help = 'Set the current time to evening (18:00)',
         restricted = 'group.admin',
@@ -121,7 +108,6 @@ if not useRealTime then
             minute = 0,
         }
     end)
-    
     lib.addCommand('night', {
         help = 'Set the current time to night (23:00)',
         restricted = 'group.admin',
@@ -131,7 +117,6 @@ if not useRealTime then
             minute = 0,
         }
     end)
-
     lib.addCommand('timescale', {
         help = ('Set milliseconds per game second (default %s)'):format(currentScale),
         restricted = 'group.admin',
@@ -147,7 +132,6 @@ if not useRealTime then
             globalState.timeScale = args.scale
         end
     end)
-
     lib.addCommand('freezetime', {
         help = 'Freeze / unfreeze time',
         restricted = 'group.admin',

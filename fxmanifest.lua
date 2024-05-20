@@ -1,7 +1,5 @@
 fx_version 'cerulean'
 game 'gta5'
-lua54 'yes'
-use_fxv2_oal 'yes'
 
 name 'Renewed Weather Sync'
 author 'FjamZoo - Renewed Scripts'
@@ -24,3 +22,6 @@ server_scripts {
 
 provide 'qb-weathersync'
 provide 'cd_easytime'
+
+lua54 'yes'
+use_fxv2_oal 'yes'

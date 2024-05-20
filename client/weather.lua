@@ -11,11 +11,9 @@ local function resetWeatherParticles()
         ForceSnowPass(false)
         WaterOverrideSetStrength(0.5)
         RemoveNamedPtfxAsset('core_snow')
-
         if IsIplActive('alamo_ice') then
             RemoveIpl('alamo_ice')
         end
-
         hadSnow = false
     end
 end
@@ -24,43 +22,35 @@ local function setWeatherParticles()
     if not hadSnow then
         lib.requestNamedPtfxAsset('core_snow', 1000)
         UseParticleFxAsset('core_snow')
-
         ForceSnowPass(true)
         SetForceVehicleTrails(true)
         SetForcePedFootstepsTracks(true)
         RequestScriptAudioBank('ICE_FOOTSTEPS', false)
         RequestScriptAudioBank('SNOW_FOOTSTEPS', false)
         WaterOverrideSetStrength(0.9)
-
         if GetResourceState('nve_iced_alamo') ~= 'missing' then
             RequestIpl('alamo_ice')
         end
-
         hadSnow = true
     end
 end
 
 local function setWeather(forceSwap)
     SetRainLevel(-1.0)
-
     if forceSwap then
         SetWeatherTypeNowPersist(serverWeather.weather)
     else
         SetWeatherTypeOvertimePersist(serverWeather.weather, 60.0)
     end
-
     if serverWeather.windDirection then
         SetWindDirection(math.rad(serverWeather.windDirection))
     end
-
     if serverWeather.windSpeed then
         SetWind(serverWeather.windSpeed / 2)
     end
-
     if serverWeather.hasSnow then
         setWeatherParticles()
     end
-
     if not serverWeather.hasSnow and hadSnow then
         resetWeatherParticles()
     end
@@ -69,7 +59,6 @@ end
 AddStateBagChangeHandler('weather', 'global', function(_, _, value)
     if value then
         serverWeather = value
-
         if playerState.syncWeather then
             setWeather()
         end
@@ -80,7 +69,6 @@ AddStateBagChangeHandler('blackOut', 'global', function(_, _, value)
     if type(value) == 'boolean' then
         SetArtificialLightsState(value)
     end
-
     SetArtificialLightsStateAffectsVehicles(false)
 end)
 
@@ -88,12 +76,9 @@ CreateThread(function ()
     while not NetworkIsSessionStarted() do -- Possible fix for slow clients
         Wait(100)
     end
-
     SetWind(0.1)
     WaterOverrideSetStrength(0.5)
-
     setWeather(true)
-
     playerState.syncWeather = true
 end)
 

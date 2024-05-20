@@ -1,14 +1,10 @@
 return {
-
     useScheduledWeather = true, -- Do you want txAdmin to schedule custom rain and thunder near restart?
     serverDuration = 14, -- How many hours will the server run before restarting?, if a server restarts every 8 hours put this to 9 etc.
     weatherCycletimer = 30, -- How many minutes between weather changes
-
     timeBetweenRain = 180, -- How many minutes between rain events
     rainAfterRestart = 60, -- How many minutes AFTER a server restart before rain will start to show?
-
     decemberSnow = false, -- if turned on means that only snow will happen in december
-
     useStaticWeather = true,
     staticWeather = {
         ['BLIZZARD'] = 0.0, --0% chance
@@ -26,11 +22,8 @@ return {
         ['THUNDER'] = 0.0,
         ['XMAS'] = 0.0
     },
-
     useWeatherSequences = false,
-
     weatherSequences = {
-
         { -- Sunny
             probability = 0.1, -- 10%
             events = {
@@ -51,7 +44,6 @@ return {
                 }
             },
         },
-
         { -- cloudy
             probability = 0.10, -- 10%
             events = {
@@ -67,7 +59,6 @@ return {
                 }
             },
         },
-
         { -- snowing
             probability = 0.3, -- 30%
             month = 12, -- What month can there be snow?
@@ -104,7 +95,6 @@ return {
                 },
             },
         },
-
         { -- snowstorm
             probability = 0.30, -- 30%
             windDirection = 120.0, -- Storms come from the south
@@ -174,7 +164,6 @@ return {
                 },
             },
         },
-
         { -- rainshower
             probability = 0.1, -- 10%
             windDirection = 240.0, -- Storms come from the south
@@ -211,7 +200,6 @@ return {
                 },
             },
         },
-
         { -- rainstorm
             probability = 0.10, -- 10%
             windDirection = 280.0, -- Storms come from the south
@@ -243,7 +231,6 @@ return {
                 },
             },
         },
-
         { -- smallstorm
             probability = 0.10, -- 10%
             windDirection = 120.0, -- Storms come from the south
@@ -280,7 +267,6 @@ return {
                 },
             },
         },
-
         { -- bigstorm
             windDirection = 180.0, -- Storms come from the south
             probability = 0.10, -- 10%

@@ -1,5 +1,4 @@
 local Config = require 'config.weather'
-
 local globalState = GlobalState
 
 local function exportHandler(exportName, func)
@@ -15,7 +14,6 @@ end)
 exportHandler('setDynamicWeather', function()
     return print("RENEWED WEATHERSYNC - THIS EXPORT IS NOT SUPPORTED")
 end)
-
 
 exportHandler('setWeather', function(weather)
     globalState.weather = {
@@ -57,7 +55,6 @@ end)
 
 exportHandler('getTime', function()
     local currentTime = globalState.currentTime
-
     return currentTime.hour, currentTime.minute
 end)
 

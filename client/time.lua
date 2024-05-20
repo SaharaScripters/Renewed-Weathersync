@@ -5,22 +5,18 @@ local playerState = LocalPlayer.state
 
 AddStateBagChangeHandler('currentTime', 'global', function(_, _, value)
     if value and next(value) then
-
         if playerState.syncWeather then
             NetworkOverrideClockTime(value.hour, value.minute, 0)
         end
-
         currentTime = value
     end
 end)
 
 AddStateBagChangeHandler('timeScale', 'global', function(_, _, value)
     if value and type(value) == 'number' then
-
         if playerState.syncWeather then
             NetworkOverrideClockMillisecondsPerGameMinute(value)
         end
-
         timeScale = value
     end
 end)
@@ -29,7 +25,6 @@ AddStateBagChangeHandler('freezeTime', 'global', function(_, _, value)
     if playerState.syncWeather then
         NetworkOverrideClockMillisecondsPerGameMinute(value and 99999999 or timeScale)
     end
-
     timeFrozen = value
 end)
 

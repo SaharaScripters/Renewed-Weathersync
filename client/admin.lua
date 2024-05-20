@@ -140,29 +140,23 @@ local function viewWeatherEvent(index, weatherEvent, isQueued)
             }
         }
     })
-
     lib.showContext('Renewed-Weathersync:client:changeWeather')
 end
 
 RegisterNetEvent('Renewed-Weather:client:viewWeatherInfo', function(weatherTable)
     local options = {}
     local amt = 0
-
     local startingIn = 0
-
     for i = 1, #weatherTable do
         local currentWeather = weatherTable[i]
         amt += 1
-
         local isQueued = i > 1
-
         local meatadata = isQueued and {
             ('Starting in %s minutes'):format(startingIn),
             ('Lasting for %s minutes'):format(currentWeather.time)
         } or {
             ('%s Minutes Remaining'):format(currentWeather.time)
         }
-
         options[amt] = {
             title = isQueued and ('Upcomming Weather: %s'):format(currentWeather.weather) or ('Current Weather: %s'):format(currentWeather.weather),
             description = isQueued and ('Starting in %s minutes'):format(startingIn),
@@ -173,16 +167,12 @@ RegisterNetEvent('Renewed-Weather:client:viewWeatherInfo', function(weatherTable
                 viewWeatherEvent(i, currentWeather, isQueued)
             end
         }
-
         startingIn += currentWeather.time
     end
-
-
     lib.registerContext({
         id = 'Renewed-Weathersync:client:manageWeather',
         title = 'Weather Management',
         options = options
     })
-
     lib.showContext('Renewed-Weathersync:client:manageWeather')
 end)

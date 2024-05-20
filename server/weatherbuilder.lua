@@ -1,7 +1,5 @@
 local Config = require 'config.weather'
-
 local currentMonth = tonumber(os.date('%m'))
-
 local cycleTimer = Config.weatherCycletimer
 
 local rainFilter = {
@@ -18,7 +16,6 @@ local function containsRain(sequence)
             return true
         end
     end
-
     return false
 end
 
@@ -30,22 +27,17 @@ local function insertEvents(events, weatherList)
     local timeUsed = 0
     for j = 1, #events do
         local weather = events[j]
-
         weatherList[#weatherList+1] = weather
         timeUsed += weather.time
     end
-
     return timeUsed
 end
 
 local function insertAllowedSequences(sequences, minutesSinceRain, timeBeforeRain)
     local timeUsed = 0
-
     local weatherList = {}
-
     for i = 1, #sequences do
         local sequence = sequences[i]
-
         local hasRain = containsRain(sequence.events)
         if isSequenceAllowed(sequence, hasRain, minutesSinceRain, timeBeforeRain) then
             local sequenceTime = insertEvents(sequence.events, weatherList)
@@ -54,29 +46,23 @@ local function insertAllowedSequences(sequences, minutesSinceRain, timeBeforeRai
             timeBeforeRain = not hasRain and timeBeforeRain - timeUsed or timeBeforeRain
         end
     end
-
     return timeUsed, minutesSinceRain, weatherList
 end
-
 
 -- Weather Event Functions --
 local function isWeatherEventAllowed(chance, hasRain, minutesSinceRain, timeBeforeRain, weather, weatherList, weatherAmount)
     local isAllowed = chance >= math_random() and (not hasRain or (timeBeforeRain <= 0 and minutesSinceRain >= Config.timeBetweenRain))
-
     if isAllowed and weatherAmount > 5 then
         local count = 0
         for i = weatherAmount - 5, weatherAmount do
             if weatherList[i].weather == weather then
                 count += 1
-
                 if count > 1 then
                     return false
                 end
             end
         end
     end
-
-
     return isAllowed
 end
 
@@ -109,15 +95,12 @@ end
 
 return function()
     local weatherList = {}
-
     if Config.decemberSnow and currentMonth == 12 then
         return getDecemberSnow()
     end
-
     local minutesLeft = Config.serverDuration * 60
     local minutesSinceRain = Config.timeBetweenRain + 1
     local timeBeforeRain = Config.rainAfterRestart
-
     while true do
         if Config.useWeatherSequences then
             local timeUsed, rainMinutes, sequenceList = insertAllowedSequences(Config.weatherSequences, minutesSinceRain, timeBeforeRain)
@@ -126,10 +109,8 @@ return function()
             timeBeforeRain = rainMinutes == 0 and timeBeforeRain - timeUsed or timeBeforeRain
             concatArray(weatherList, sequenceList)
         end
-
         if Config.useStaticWeather then
             local weatherCount = #weatherList
-
             for weather, chance in pairs(Config.staticWeather) do
                 local hasRain = rainFilter[weather]
                 if isWeatherEventAllowed(chance, hasRain, minutesSinceRain, timeBeforeRain, weather, weatherList, weatherCount) then
@@ -141,11 +122,9 @@ return function()
                 end
             end
         end
-
         if minutesLeft <= 0 then
             return weatherList
         end
-
         Wait(0)
     end
 end
