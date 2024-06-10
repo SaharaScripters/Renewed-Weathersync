@@ -66,6 +66,10 @@ lib.addCommand('weather', {
     TriggerClientEvent('Renewed-Weather:client:viewWeatherInfo', source, weatherList)
 end)
 
+exports('getWeatherList', function()
+    return weatherList
+end)
+
 -- Scheduled restart --
 if useScheduledWeather then
     AddEventHandler('txAdmin:events:scheduledRestart', function(eventData)

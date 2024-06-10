@@ -91,15 +91,12 @@ local function viewWeatherEvent(index, weatherEvent, isQueued)
                             options = weatherTypes
                         },
                     })
-
                     if input and input[1] then
                         local weather = lib.callback.await('Renewed-Weathersync:server:setWeatherType', false, index, input[1])
-
                         if weather then
                             weatherEvent.weather = weather
                         end
                     end
-
                     viewWeatherEvent(index, weatherEvent)
                 end
             },
@@ -118,7 +115,6 @@ local function viewWeatherEvent(index, weatherEvent, isQueued)
                             default = weatherEvent.time,
                         },
                     })
-
                     if input and input[1] then
                         local time = lib.callback.await('Renewed-Weathersync:server:setEventTime', false, index, input[1])
 
@@ -126,7 +122,6 @@ local function viewWeatherEvent(index, weatherEvent, isQueued)
                             weatherEvent.time = time
                         end
                     end
-
                     viewWeatherEvent(index, weatherEvent)
                 end
             },
